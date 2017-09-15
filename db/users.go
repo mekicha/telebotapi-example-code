@@ -46,7 +46,7 @@ func Save(user *User) {
 	db := Init()
 	defer db.Close()
 
-	result := db.Create(&user)
+	result := db.Create(user)
 
 	if result.Error != nil {
 		errorMsg := result.Error.Error()
