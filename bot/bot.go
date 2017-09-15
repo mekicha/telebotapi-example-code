@@ -4,6 +4,8 @@ import (
 	"log"
 	"os"
 	"gopkg.in/telegram-bot-api.v4"
+	"github.com/mekicha/telebot/db"
+	
 )
 
 func RunBot() {
@@ -25,6 +27,17 @@ func RunBot() {
 		}
 
 		log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text)
+
+		chatId := update.Message.Chat.ID
+		if db.Registered(chatId) == false {
+
+			user := db.User{ ChatID: chatId, 
+				FirstName: update.Message.Chat.FirstName, 
+				LastName: update.Message.Chat.LastName, 
+			}
+
+			db.Save(&user)
+		}
 
 		msg := tgbotapi.NewMessage(update.Message.Chat.ID, update.Message.Text)
 		msg.ReplyToMessageID = update.Message.MessageID

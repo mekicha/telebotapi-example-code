@@ -8,7 +8,7 @@ import (
 
 type User struct {
 	gorm.Model
-	ChatID uint 
+	ChatID int64 
 	FirstName string
 	LastName string
 }
@@ -23,7 +23,7 @@ func Init() *gorm.DB {
 	return db
 }
 
-func Registered(ChatID uint) bool {
+func Registered(ChatID int64) bool {
 	db := Init()
 	defer db.Close()
 
@@ -42,11 +42,9 @@ func Registered(ChatID uint) bool {
 }
 
 
-func Save(ChatID uint, FirstName, LastName string) {
+func Save(user *User) {
 	db := Init()
 	defer db.Close()
-
-	user := User{ChatID: ChatID, FirstName: FirstName, LastName: LastName }
 
 	result := db.Create(&user)
 
