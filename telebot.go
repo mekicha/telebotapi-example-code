@@ -28,8 +28,8 @@ type Message struct {
 	Text string 
 }
 
-func NewBot(token string) Bot {
-	return Bot{
+func NewBot(token string) *Bot {
+	return &Bot{
 		token: token,
 	}
 }
